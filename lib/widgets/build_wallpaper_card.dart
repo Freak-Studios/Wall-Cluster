@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../constants/const.dart';
@@ -29,6 +30,8 @@ class _BuildWallpaperCardState extends State<BuildWallpaperCard> {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: widget.wallpaper.imgLink,
+      cacheManager: DefaultCacheManager(),
+      cacheKey: widget.wallpaper.id,
       placeholder: (context, url) => Container(
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(

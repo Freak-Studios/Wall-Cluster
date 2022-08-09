@@ -40,10 +40,11 @@ class _BuildSetWallpaperState extends State<BuildSetWallpaper> {
   Widget build(BuildContext context) {
     Brightness brightness = Theme.of(context).colorScheme.brightness;
 
-    Future<void> setWallpaper({required int screen}) async {
+    void setWallpaper({required int screen}) {
       startLoading();
-      await DefaultCacheManager().getSingleFile(widget.wallpaper.imgLink).then(
-          (value) => AsyncWallpaper.setWallpaperFromFile(value.path, screen));
+      DefaultCacheManager().getFileFromCache(widget.wallpaper.id).then(
+          (value) =>
+              AsyncWallpaper.setWallpaperFromFile(value!.file.path, screen));
     }
 
     return Scaffold(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wall_cluster/widgets/build_wallpaper_grid_view.dart';
@@ -18,6 +20,24 @@ class _WallpapersPageState extends State<WallpapersPage> {
   final FirestoreService firestoreService = FirestoreService();
   bool isError = false;
   int initialLimt = 12;
+
+  late Timer _timer;
+
+  @override
+  void initState() {
+    _timer = Timer(const Duration(seconds: 3), () {
+      setState(() {
+        isError = true;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,19 +60,24 @@ class _WallpapersPageState extends State<WallpapersPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.error,
-                    color: defaultAccentColor, size: emptyListIconSize),
+                isError
+                    ? Icon(Icons.error,
+                        color: defaultAccentColor, size: emptyListIconSize)
+                    : CircularProgressIndicator(color: defaultAccentColor),
                 const SizedBox(height: 10),
-                Text(
-                  'Oops! Something Went Wrong',
-                  style: emptyListTextStyle,
-                ),
-                TextButton(
-                  onPressed: () {
-                    setState(() {});
-                  },
-                  child: Text('refresh', style: alertDialogTextStyle),
-                ),
+                isError
+                    ? Text(
+                        'Oops! Something Went Wrong',
+                        style: emptyListTextStyle,
+                      )
+                    : Text('Loading', style: emptyListTextStyle),
+                if (isError)
+                  TextButton(
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    child: Text('refresh', style: alertDialogTextStyle),
+                  ),
               ],
             ),
           );

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:wall_cluster/services/local_data_service.dart';
 import 'package:wall_cluster/widgets/build_wallpaper_info.dart';
 
@@ -34,7 +35,11 @@ class _WallpaperPageState extends State<WallpaperPage> {
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: CachedNetworkImageProvider(widget.wallpaper.imgLink),
+          image: CachedNetworkImageProvider(
+            widget.wallpaper.imgLink,
+            cacheManager: DefaultCacheManager(),
+            cacheKey: widget.wallpaper.id,
+          ),
           filterQuality: FilterQuality.high,
         ),
       ),
