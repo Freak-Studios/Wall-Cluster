@@ -24,7 +24,7 @@ class _BuildSetWallpaperState extends State<BuildSetWallpaper> {
 
   void startLoading() {
     setState(() => isLoading = true);
-    _timer = Timer(const Duration(seconds: 5), () {
+    _timer = Timer(const Duration(seconds: 3), () {
       context.router.pop();
       setState(() => isLoading = false);
     });

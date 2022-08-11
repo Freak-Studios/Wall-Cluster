@@ -23,13 +23,15 @@ class WallpaperAdapter extends TypeAdapter<Wallpaper> {
       collectionIds: (fields[3] as List).cast<String>(),
       res: fields[4] as String,
       isDark: fields[5] as bool,
+      tImgLink: fields[6] as String,
+      uploadDate: fields[7] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, Wallpaper obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,7 +43,11 @@ class WallpaperAdapter extends TypeAdapter<Wallpaper> {
       ..writeByte(4)
       ..write(obj.res)
       ..writeByte(5)
-      ..write(obj.isDark);
+      ..write(obj.isDark)
+      ..writeByte(6)
+      ..write(obj.tImgLink)
+      ..writeByte(7)
+      ..write(obj.uploadDate);
   }
 
   @override
@@ -70,6 +76,9 @@ Wallpaper _$WallpaperFromJson(Map<String, dynamic> json) => Wallpaper(
           const [""],
       res: json['res'] as String? ?? '2400*4880',
       isDark: json['isDark'] as bool? ?? true,
+      tImgLink: json['tImgLink'] as String? ??
+          'https://firebasestorage.googleapis.com/v0/b/wall-cluster.appspot.com/o/wallpapers%2F4.png?alt=media&token=750782f9-96d2-45cd-a04f-bfd17f6b7bc2',
+      uploadDate: (json['uploadDate'] as Timestamp).toDate(),
     );
 
 Map<String, dynamic> _$WallpaperToJson(Wallpaper instance) => <String, dynamic>{
@@ -79,4 +88,6 @@ Map<String, dynamic> _$WallpaperToJson(Wallpaper instance) => <String, dynamic>{
       'collectionIds': instance.collectionIds,
       'res': instance.res,
       'isDark': instance.isDark,
+      'tImgLink': instance.tImgLink,
+      'uploadDate': instance.uploadDate.toIso8601String(),
     };

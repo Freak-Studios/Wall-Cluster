@@ -29,9 +29,9 @@ class _BuildWallpaperCardState extends State<BuildWallpaperCard> {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: widget.wallpaper.imgLink,
+      imageUrl: widget.wallpaper.tImgLink,
       cacheManager: DefaultCacheManager(),
-      cacheKey: widget.wallpaper.id,
+      cacheKey: "${widget.wallpaper.id}thumbnails",
       placeholder: (context, url) => Container(
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(

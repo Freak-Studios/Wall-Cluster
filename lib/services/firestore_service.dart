@@ -15,7 +15,11 @@ class FirestoreService {
       FirebaseFirestore.instance.collection("tags");
 
   Future<List<Wallpaper>> getWallpapers(int limit) {
-    var results = wallpapersRef.limit(limit).get().then((value) => value.docs);
+    var results = wallpapersRef
+        .orderBy('uploadDate', descending: true)
+        .limit(limit)
+        .get()
+        .then((value) => value.docs);
     return results.then((value) => value.map((e) {
           Map<String, dynamic> data = e.data() as Map<String, dynamic>;
           data['id'] = e.id;
