@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -23,8 +22,6 @@ class Wallpaper {
   final bool isDark;
   @HiveField(6)
   final String tImgLink;
-  @HiveField(7)
-  final DateTime uploadDate;
 
   Wallpaper({
     this.id = '',
@@ -36,7 +33,6 @@ class Wallpaper {
     this.isDark = true,
     this.tImgLink =
         'https://firebasestorage.googleapis.com/v0/b/wall-cluster.appspot.com/o/wallpapers%2F4.png?alt=media&token=750782f9-96d2-45cd-a04f-bfd17f6b7bc2',
-    required this.uploadDate,
   });
 
   factory Wallpaper.fromJson(Map<String, dynamic> json) {
